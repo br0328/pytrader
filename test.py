@@ -39,10 +39,10 @@ cerebro.addstrategy(SmaCross, **kwargs)
 if not is_local_data:
     import yfinance as yf
     
-    data = bt.feeds.PandasData(dataname = yf.download('MSFT', '2015-07-06', '2021-07-01', auto_adjust = True))
-    joblib.dump(data, 'msft.dat')
+    data = bt.feeds.PandasData(dataname = yf.download('BTC-USD', '2019-07-06', '2021-07-01', auto_adjust = True))
+    joblib.dump(data, 'btc.dat')
 else:
-    data = joblib.load('msft.dat')
+    data = joblib.load('btc.dat')
 
 cerebro.adddata(data)
 cerebro.addanalyzer(bt.analyzers.Transactions, _name = "trans")

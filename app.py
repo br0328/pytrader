@@ -1,19 +1,15 @@
 
-from config import *
-from data import *
-from ui import *
+from dash import dcc, html, dash_table, callback, Output, Input, page_container
 import dash_bootstrap_components as dbc
 import pandas as pd
 import dash
 import os
 
-initialize_data()
-
-if not os.path.exists('./out/'): os.mkdir('./out')
-
 app = dash.Dash(__name__, use_pages = True, external_stylesheets = [dbc.themes.SANDSTONE])
 
-app.title = 'Chartman'
-app.layout = get_app_layout()
+app.title = 'PEMBE POC'
+app.layout = html.Div([
+    page_container
+])
 
-app.run(debug = False, host = 'localhost', port = 1000)
+app.run(debug = False, host = 'localhost', port = 1123)

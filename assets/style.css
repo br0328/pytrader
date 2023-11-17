@@ -1,0 +1,95 @@
+@font-face {
+    font-family: "Chillax-Bold";
+    src: url("Chillax-Bold.ttf") format("truetype");
+}
+
+.content {
+    text-align: center;
+}
+
+.header {
+    display: inline-block;
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    font-family: "Chillax-Bold";
+    font-weight: bolder;
+    color: darkred;
+}
+
+h2 {
+    font-weight: bolder;
+    color: darkblue
+}
+
+.main_tab {
+    height: 45px;
+}
+
+.main_tab>.tab {
+    padding: 10px!important;
+    font-weight: bold;
+}
+
+.tab-script {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-div {
+    flex-grow: 0.5;
+    height: 640px
+}
+
+.right-div {
+    flex-grow: 0.5;
+    height: 640px
+}
+
+#script-input {
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    margin: 40px 40px 10px 40px;
+    padding: 20px;
+}
+
+.setting-panel {
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    margin: 40px 40px 10px 40px;
+    padding: 20px;
+    border: dashed #909090 thin;
+    text-align: left;
+}
+
+.param-div {
+    padding: 20px;
+}
+
+.param-div>div {
+    display: inline-block;
+}
+
+.param-label {
+    font-size: 14px;
+    width: 60px;
+    text-align: right;
+}
+
+button {
+    padding: 6px 30px 6px 30px;
+    background-color: #303030;
+    color: #FFFFFF;
+    border-width: thin;
+    border: linen;
+    border-radius: 10px;
+    font-size: 14px;
+    height: 40px;
+    width: 120px;
+}
+
+.plot-graph {
+    height: 640px;
+}
