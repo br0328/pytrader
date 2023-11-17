@@ -64,6 +64,8 @@ class Position(object):
         self.set(size, price)
 
         self.updt = None
+        
+        self.info = dict() # SMS
 
     def fix(self, size, price):
         oldsize = self.size

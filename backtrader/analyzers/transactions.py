@@ -86,16 +86,21 @@ class Transactions(bt.Analyzer):
                 break  # end of pending reached
 
             pos.update(exbit.size, exbit.price)
+            pos.info = order.info # SMS
 
     def next(self):
         # super(Transactions, self).next()  # let dtkey update
         entries = []
+        
+        ###print('$$$$') ### SMS
         for i, dname in self._idnames:
             pos = self._positions.get(dname, None)
             if pos is not None:
                 size, price = pos.size, pos.price
                 if size:
-                    entries.append([size, price, i, dname, -size * price])
+                    #entries.append([size, price, i, dname, -size * price])
+                    entries.append([size, price, i, dname, -size * price, pos.info])
+                    ##print(price, dname) ### SMS
 
         if entries:
             self.rets[self.strategy.datetime.datetime()] = entries
