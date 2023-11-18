@@ -65,7 +65,7 @@ class Position(object):
 
         self.updt = None
         
-        self.info = dict() # SMS
+        self.info = dict() # Nikola
 
     def fix(self, size, price):
         oldsize = self.size

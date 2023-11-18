@@ -28,11 +28,11 @@ h2 {
     padding: 0 40px 0 40px;
 }
 
-.main-tab {
+#main-tab {
     height: 45px;
 }
 
-.main-tab>.tab {
+#main-tab>.tab {
     padding: 10px!important;
     font-weight: bold;
 }
@@ -123,4 +123,30 @@ button {
     border: none;
     border-radius: 0;
     font-size: 14px;
+}
+
+#record-div {
+    display: inline-block;
+    text-align: center;
+    padding: 40px 0 20px 0;
+}
+
+#record-div th {
+    text-align: center;
+    background: black;
+    color: white;
+}
+
+#record-div td {
+    text-align: center;
+}
+
+.previous-next-container {
+    display: inline-block;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.dash-table-container {
+    border: solid 1px #909090
 }
