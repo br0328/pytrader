@@ -32,7 +32,7 @@ class SmaCross(backtrader.Strategy):
         if pos == 0:
             if cross > 0:
                 self.buy(signal = signal)
-            elif self.crossover < 0:
+            elif cross < 0:
                 self.sell(signal = signal)
             else:
                 self.buy(signal = signal)
