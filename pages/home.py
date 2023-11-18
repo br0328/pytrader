@@ -180,7 +180,7 @@ def compile_script(script):
 	param_info = []
 	
 	try:
-		code = compile(script, filename = '<string>', mode = 'exec')		
+		code = compile(script, filename = '<string>', mode = 'exec')
 	except SyntaxError as e:
 		return -1, e, None
 
@@ -210,7 +210,7 @@ def compile_script(script):
 	if constructor_def is not None:
 		for param in constructor_def.args.args[1:]:
 			param_name = param.arg
-			param_type = 'Variant'
+			param_type = 'Object'
 
 			if param.annotation is not None:
 				if param.annotation.id == 'str':
@@ -219,10 +219,15 @@ def compile_script(script):
 					param_type = 'Float'
 				elif 'int' in param.annotation.id.lower():
 					param_type = 'Integer'
+				elif param.annotation.id == 'bool':
+					param_type = 'Boolean'
 			
 			param_info.append([param_name, param_type, ''])
 
-		def_vals = [d.value for d in constructor_def.args.defaults]
+		try:
+			def_vals = [d.value for d in constructor_def.args.defaults]
+		except Exception as e:
+			return -4, e, None
 
 		for i in range(len(param_info) - len(def_vals), len(param_info)):
 			param_info[i][-1] = def_vals[len(def_vals) - len(param_info) + i]
@@ -239,6 +244,32 @@ def compare_param_info(param_info):
         if p1[1] != p2[1]: return False
     
     return True
+
+def get_kwargs(param_info, args, script):
+	ex_script = script + '\n\n'
+
+	for p, a in list(zip(param_info, args)):
+		ex_script += p[0] + '='
+
+		if p[1] == 'String':
+			ex_script += '"' + a + '"'			
+		else:
+			ex_script += str(a)		
+
+		ex_script += '\n'
+
+	try:
+		code = compile(ex_script, filename = '<string>', mode = 'exec')
+		exec(code)
+	except Exception as e:
+		return None, e
+
+	res = {}
+
+	for p in param_info:
+		res[p[0]] = locals()[p[0]]
+
+	return res, None
 
 @callback(
 	script_callback_output,
@@ -261,7 +292,7 @@ def on_save_clicked(n_clicks, script):
 		for i in range(len(pi)):
 			param_ret[i] = {'display': 'block'}
 			param_ret[max_params + i] = render_param_name(pi[i][0]) + ' :'
-			param_ret[2 * max_params + i] = pi[i][2]
+			param_ret[2 * max_params + i] = str(pi[i][2])
 			param_ret[3 * max_params + i] = '(' + pi[i][1] + ')'
 
 		return alert_success('Saved Successfully.', param_ret)
@@ -271,6 +302,8 @@ def on_save_clicked(n_clicks, script):
 		return alert_error('Strategy class definition not found.', param_ret)
 	elif err == -3:
 		return alert_error('Expected only one strategy class definition but got {} definitions.'.format(res), param_ret)
+	elif err == -4:
+		return alert_error('Only primitive data types are supported for constructor arguments.', param_ret)
 
 @callback(
 	script_callback_output + [Output('script-input', 'value')],
@@ -312,16 +345,17 @@ def on_test_clicked(n_clicks, script, *args):
 		return alert_error('Error found in the script. Save and retry.', param_ret)
 	elif not compare_param_info(pi):
 		return alert_error('The script has been changed. Save and retry.', param_ret)
+	
+	kwargs, err = get_kwargs(saved_param_info, args, script) 
+	if kwargs is None: return alert_error('Parameter error: {}'.format(err), param_ret)
 
-	clsname, code = res
-	exec(code)
-
-	cerebro = bt.Cerebro()
-	kwargs = {}
+	try:
+		clsname, code = res
+		exec(code)
+	except Exception as e:
+		return alert_error('Link error: {}'.format(e), param_ret)
  
-	for i, p in enumerate(saved_param_info):
-		kwargs[p[0]] = args[i]
-
+	cerebro = bt.Cerebro() 
 	cerebro.addstrategy(locals()[clsname], **kwargs)
 	cerebro.adddata(data)
 	cerebro.addanalyzer(bt.analyzers.Transactions, _name = 'trans')
