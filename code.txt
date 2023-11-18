@@ -1,3 +1,7 @@
+"""
+# This code is only for POC test, not a real strategy.
+"""
+
 import numpy as np
 
 class SmaCross(backtrader.Strategy):
@@ -32,13 +36,13 @@ class SmaCross(backtrader.Strategy):
                 self.sell(signal = signal)
             else:
                 self.buy(signal = signal)
-        elif self.position.size > 0:
-            if self.crossover < 0:
+        elif pos > 0:
+            if cross < 0:
                 self.close(signal = signal)
-            elif self.crossover == 0:
+            elif cross == 0:
                 self.close(signal = signal)
-        elif self.position.size < 0:
-            if self.crossover > 0:
+        elif pos < 0:
+            if cross > 0:
                 self.close(signal = signal)
-            elif self.crossover == 0:
+            elif cross == 0:
                 self.close(signal = signal)
