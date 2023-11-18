@@ -6,8 +6,8 @@ import numpy as np
 
 class SmaCross(backtrader.Strategy):
     def __init__(self, period_1 = 5, period_2 = 8, reverse : bool = False):
-        sma1, sma2 = bt.ind.SMA(period = period_1), bt.ind.SMA(period = period_2)        
-        self.crossover = bt.ind.CrossOver(sma1, sma2)        
+        sma1, sma2 = backtrader.ind.SMA(period = period_1), backtrader.ind.SMA(period = period_2)        
+        self.crossover = backtrader.ind.CrossOver(sma1, sma2)        
 
         sig_condition = {
             (0, 1): 'Long', (0, -1): 'Short', (0, 0): 'Semi-Long',
