@@ -1,0 +1,28 @@
+import backtrader as bt
+import numpy as np
+
+class SmaCross(bt.Strategy):
+    def __init__(self, x1 : str, x2 : int = 0):
+        sma1, sma2 = bt.ind.SMA(period = 10), bt.ind.SMA(period = 30)
+        self.crossover = bt.ind.CrossOver(sma1, sma2)
+        
+        print('Hey! Initialized with x1={} and x2={}'.format(x1, x2))
+    
+    def next(self):
+        if not self.position:
+            if self.crossover > 0:
+                self.buy(signal = 'Long')
+            elif self.crossover < 0:
+                self.sell(signal = 'Short')
+            else:
+                self.buy(signal = 'Semi-Long')
+        elif self.position.size > 0:
+            if self.crossover < 0:
+                self.close(signal = 'Short')
+            elif self.crossover == 0:
+                self.close(signal = 'Semi-Short')
+        elif self.position.size < 0:
+            if self.crossover > 0:
+                self.close(signal = 'Long')
+            elif self.crossover == 0:
+                self.close(signal = 'Semi-Long')

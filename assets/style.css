@@ -24,11 +24,15 @@ h2 {
     color: darkblue
 }
 
-.main_tab {
+.tab-parent {
+    padding: 0 40px 0 40px;
+}
+
+.main-tab {
     height: 45px;
 }
 
-.main_tab>.tab {
+.main-tab>.tab {
     padding: 10px!important;
     font-weight: bold;
 }
@@ -51,7 +55,7 @@ h2 {
 #script-input {
     height: -webkit-fill-available;
     width: -webkit-fill-available;
-    margin: 40px 40px 10px 40px;
+    margin: 40px 40px 5px 40px;
     padding: 20px;
 }
 
@@ -59,13 +63,14 @@ h2 {
     height: -webkit-fill-available;
     width: -webkit-fill-available;
     margin: 40px 40px 10px 40px;
-    padding: 20px;
+    padding: 12px 20px 20px 10px;
     border: dashed #909090 thin;
     text-align: left;
 }
 
 .param-div {
-    padding: 20px;
+    padding: 20px 20px 20px 0;
+    display: none;
 }
 
 .param-div>div {
@@ -74,12 +79,27 @@ h2 {
 
 .param-label {
     font-size: 14px;
-    width: 60px;
+    font-weight: bold;
+    width: 220px;
     text-align: right;
+}
+
+.param-input {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 120px;
+}
+
+.param-type {
+    font-size: 14px;
+    text-align: left;
 }
 
 button {
     padding: 6px 30px 6px 30px;
+    margin: 0 30px 0 30px;
     background-color: #303030;
     color: #FFFFFF;
     border-width: thin;
@@ -92,4 +112,15 @@ button {
 
 .plot-graph {
     height: 640px;
+}
+
+.alert {
+    position: fixed;
+    right: 40px;
+    top: 120px;
+    padding: 10px 16px 10px 16px;
+    width: fit-content;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
 }
